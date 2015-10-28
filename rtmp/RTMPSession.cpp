@@ -65,8 +65,16 @@ namespace videocore
             if(tokenCount++ < 2) { // skip protocol and host/port
                 continue;
             }
-            if(tokenCount == 3) {
-                m_app = *it;
+            //FIX: Always read application instance name
+            //TODO: Make this optional
+            if(tokenCount == 3 || tokenCount == 4) {
+                if (m_app.empty()) {
+                    m_app = *it;
+                } else {
+                    m_app += "/";
+                    m_app += *it;
+                }
+                
             } else {
                 pp << *it << "/";
             }
